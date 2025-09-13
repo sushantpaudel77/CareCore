@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -48,7 +50,11 @@ public class WebSecurityConfig {
                         (AuthenticationFailureHandler) (request, response, exception) -> {
                             log.error("OAuth2 error: {}", exception.getMessage());
                         }
-                ));
+                )
+                                .successHandler((AuthenticationSuccessHandler) (request, response, authentication) -> {
+
+                                })
+                );
         return http.build();
     }
 }
