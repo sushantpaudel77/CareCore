@@ -26,4 +26,4 @@ server:
     context-path: /api/v1
 
 jwt:
-  secretKey: "21837c19b3c9116c2df5b9cec5d7bd35b87a72cf92239a9e3ca91ff58190e331"
+  secretKey: ${JWT_SECRET_KEY}
