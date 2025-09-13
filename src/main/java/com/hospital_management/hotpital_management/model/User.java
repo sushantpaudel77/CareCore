@@ -1,5 +1,6 @@
 package com.hospital_management.hotpital_management.model;
 
+import com.hospital_management.hotpital_management.model.enums.AuthProviderType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,9 @@ import java.util.List;
 @Setter
 @ToString
 @Builder
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "idx_provider_id_provider_type", columnList = "providerId, providerType")
+})
 public class User implements UserDetails {
 
     @Id
@@ -26,6 +29,11 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+
+    private String providerId;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProviderType providerType;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

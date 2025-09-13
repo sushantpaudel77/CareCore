@@ -26,6 +26,7 @@ import java.io.IOException;
 public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,20 +41,18 @@ public class WebSecurityConfig {
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()   // no /api/v1 prefix!
-                .requestMatchers("/public/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()   // no /api/v1 prefix!
+                                .requestMatchers("/public/**").permitAll()
 //                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        )
+                                .anyRequest().authenticated()
+                )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth2 -> oauth2.failureHandler(
-                        (AuthenticationFailureHandler) (request, response, exception) -> {
-                            log.error("OAuth2 error: {}", exception.getMessage());
-                        }
-                )
-                                .successHandler((AuthenticationSuccessHandler) (request, response, authentication) -> {
-
-                                })
+                                        (AuthenticationFailureHandler) (request, response, exception) -> {
+                                            log.error("OAuth2 error: {}", exception.getMessage());
+                                        }
+                                )
+                                .successHandler(oAuth2SuccessHandler)
                 );
         return http.build();
     }

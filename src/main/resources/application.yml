@@ -29,6 +29,9 @@ spring:
           google:
             client-id: ${GOOGLE_OAUTH2_CLIENT_ID}
             client-secret: ${GOOGLE_OAUTH2_CLIENT_SECRET}
+          github:
+            client-id: ${GITHUB_OAUTH2_CLIENT_ID:Ov23ligfFoiXupsxFWzI}
+            client-secret: ${GITHUB_OAUTH2_CLIENT_SECRET}
 
 server:
   servlet:
@@ -36,3 +39,4 @@ server:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY:myDefaultSecretKeyThatIsLongEnough123456}
+
