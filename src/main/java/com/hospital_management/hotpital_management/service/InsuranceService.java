@@ -18,7 +18,6 @@ public class InsuranceService {
 
     private final InsuranceRepository insuranceRepository;
 
-
     public Insurance createInsurance(Insurance insurance) {
 
         if (insuranceRepository.existsByPolicyNumber(insurance.getPolicyNumber())) {
